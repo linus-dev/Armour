@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <title>Armour RPG</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="js/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="console">
+    </div>
+    <div id="cmd">
+      <input id="cmd_txt" type="text">
+    </div>
+  </body>
+  <script type="text/javascript">
+    function PrintToTerminal(msg) {
+      $('#console').append('<span class="cmd_line">' + msg + '</span>');
+    }
+    
+    /* Send command to server. */
+    function SendCmd(cmd) {
+      $('#cmd_txt').val('');
+      //PrintToTerminal(cmd)
+      $("#console").scrollTop($("#console")[0].scrollHeight);
+      exampleSocket.send(cmd);
+    }
+    
+    /* On enter. */
+    $('#cmd_txt').keypress(function (e) {
+      if (e.which == 13) {
+        var cmd = $('#cmd_txt').val();
+        SendCmd(cmd);
+        return false;
+      }
+    });
+    var exampleSocket = new WebSocket("ws://localhost:8080");
+    exampleSocket.onopen = function (event) {
+      PrintToTerminal("Connected to the Armour server.");
+    };
+    exampleSocket.onclose = function (event) {
+      PrintToTerminal("Disconnected from the Armour server.");
+    };
+    exampleSocket.onmessage = function (event) {
+      PrintToTerminal(event.data);
+      $("#console").scrollTop($("#console")[0].scrollHeight);
+    }
+    /* Socket setup. */
+    /*var socket = io('http://localhost:8080');
+    socket.on('connect', function(){PrintToTerminal("Connected");});
+    socket.on('event', function(data){});
+    socket.on('disconnect', function(){});*/
+  </script>
+</html>

@@ -1,0 +1,44 @@
+/* Pretty little colours. */
+
+body {
+  background-color: #000000;
+}
+#console {
+  border: 1px solid white;
+  background-color: #000000;
+  
+  font-family: 'VT323', cursive;
+  font-size: 22px;
+  color: #33ff33;
+  
+  max-width: 37rem;
+  min-width: 20rem;
+  min-height: 20rem;
+  max-height: 20rem;
+  overflow: auto;
+}
+
+#cmd {
+  border: 1px solid white;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #f4f4f4;
+  background-color: #000000;
+  font-size: "Lucida Console"
+  color: #33ff33;
+  max-width: 37rem;
+  min-width: 20rem;
+  min-height: 1rem;
+}
+
+#cmd_txt {
+  width: 99.3%;
+  font-size: "Lucida Console"
+  font-size: 20px;
+}
+
+.cmd_line {
+  display: block;
+  margin-top: 0px;
+  margin-bottom: -6px;
+}
