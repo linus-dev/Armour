@@ -5,8 +5,13 @@
     <title>Armour RPG</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="js/socket.io.js"></script>
+    <script src="js/nlp.js"></script>
     <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.10/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+    <script src="https://rawgit.com/kawanet/msgpack-lite/master/dist/msgpack.min.js"></script>
   </head>
   <body>
     <div id="console">
@@ -18,13 +23,14 @@
   <script type="text/javascript">
     function PrintToTerminal(msg) {
       $('#console').append('<span class="cmd_line">' + msg + '</span>');
+      $("#console").scrollTop($("#console")[0].scrollHeight);
     }
     
     /* Send command to server. */
     function SendCmd(cmd) {
       $('#cmd_txt').val('');
-      //PrintToTerminal(cmd)
-      $("#console").scrollTop($("#console")[0].scrollHeight);
+      PrintToTerminal(cmd)
+      GetVerbs(cmd);
       exampleSocket.send(cmd);
     }
     
@@ -37,6 +43,7 @@
       }
     });
     var exampleSocket = new WebSocket("ws://localhost:8080");
+    exampleSocket.binaryType = "arraybuffer";
     exampleSocket.onopen = function (event) {
       PrintToTerminal("Connected to the Armour server.");
     };
@@ -44,8 +51,14 @@
       PrintToTerminal("Disconnected from the Armour server.");
     };
     exampleSocket.onmessage = function (event) {
-      PrintToTerminal(event.data);
-      $("#console").scrollTop($("#console")[0].scrollHeight);
+      var data = {msg: ""};
+      if (typeof(event.data) == "string") {
+        console.log(event.data);
+        data.msg = event.data;
+      } else {
+        data = msgpack.decode(new Uint8Array(event.data));
+      }
+      PrintToTerminal(data.msg);
     }
     /* Socket setup. */
     /*var socket = io('http://localhost:8080');
