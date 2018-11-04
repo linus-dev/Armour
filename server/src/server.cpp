@@ -21,7 +21,7 @@ void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg) {
 
   /* Build json return data. */
   json j;
-  j["msg"] = "Welcome to ARMOUR!";
+  j["node"] = 0;
 
   std::vector<std::uint8_t> v_msgpack = json::to_msgpack(j);
   std::cout << websocketpp::utility::to_hex(v_msgpack.data(), 20) << std::endl;
