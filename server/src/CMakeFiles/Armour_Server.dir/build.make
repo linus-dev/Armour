@@ -81,6 +81,7 @@ bin/Armour_Server: src/CMakeFiles/Armour_Server.dir/server.cpp.o
 bin/Armour_Server: src/CMakeFiles/Armour_Server.dir/build.make
 bin/Armour_Server: /usr/lib/libboost_system.so
 bin/Armour_Server: /usr/lib/libboost_filesystem.so
+bin/Armour_Server: /usr/lib/libboost_date_time.so
 bin/Armour_Server: src/CMakeFiles/Armour_Server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/linus/development/Armour/server/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/Armour_Server"
 	cd /home/linus/development/Armour/server/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Armour_Server.dir/link.txt --verbose=$(VERBOSE)

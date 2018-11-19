@@ -21,7 +21,9 @@
     </div>
   </body>
   <script type="text/javascript">
-    function PrintToTerminal(msg) {
+    function PrintToTerminal(msg, time = null) {
+      var time_str = '[' + time + ']: ';
+      msg = (time ? time_str + msg : msg);
       $('#console').append('<span class="cmd_line">' + msg + '</span>');
       $("#console").scrollTop($("#console")[0].scrollHeight);
     }
@@ -59,6 +61,9 @@
         data = msgpack.decode(new Uint8Array(event.data));
       }
       PrintToTerminal(data.msg);
+      for (var i in data.data) {
+        PrintToTerminal(data.data[i], data.time);
+      }
     }
     /* Socket setup. */
     /*var socket = io('http://localhost:8080');
